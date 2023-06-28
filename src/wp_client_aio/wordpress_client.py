@@ -28,39 +28,25 @@ class WordpressRestApiClient:
         self.auth = aiohttp.BasicAuth(user, password)
 
     async def get(
-        self,
-        client: ClientSession,
-        /, *,
-        endpoint: Union[str, int] = ""
+        self, client: ClientSession, /, *, endpoint: Union[str, int] = ""
     ) -> str:
         """GET method.
 
         Args:
             endpoint (Optional[int], optional): endpoint url
         """
-        async with client.get(
-                f"{self.url}/{endpoint}",
-                auth=self.auth) as resp:
+        async with client.get(f"{self.url}/{endpoint}", auth=self.auth) as resp:
             response = await resp.json()
             logging.info(json.dumps(response, indent=4))
             return response
 
-    async def post(
-        self,
-        client: ClientSession,
-        /, *,
-        payload: dict[str, str]
-    ) -> str:
+    async def post(self, client: ClientSession, /, *, payload: dict[str, str]) -> str:
         """POST method.
 
         Args:
             payload (dict[str, str]): dictionary payload for POST method
         """
-        async with client.post(
-            f"{self.url}",
-            json=payload,
-            auth=self.auth
-        ) as resp:
+        async with client.post(f"{self.url}", json=payload, auth=self.auth) as resp:
             response = await resp.json()
             logging.info(response)
             return response
@@ -68,9 +54,10 @@ class WordpressRestApiClient:
     async def patch(
         self,
         client: ClientSession,
-        /, *,
+        /,
+        *,
         endpoint: Optional[Union[str, int]],
-        payload: dict[str, str]
+        payload: dict[str, str],
     ) -> str:
         """PATCH method.
 
@@ -81,9 +68,7 @@ class WordpressRestApiClient:
 
         """
         async with client.patch(
-            f"{self.url}/{endpoint}",
-            json=payload,
-            auth=self.auth
+            f"{self.url}/{endpoint}", json=payload, auth=self.auth
         ) as resp:
             response = await resp.json()
             logging.info(response)
@@ -92,9 +77,10 @@ class WordpressRestApiClient:
     async def put(
         self,
         client: ClientSession,
-        /, *,
+        /,
+        *,
         endpoint: Optional[Union[str, int]],
-        payload: dict[str, str]
+        payload: dict[str, str],
     ) -> str:
         """PUT method.
 
@@ -103,28 +89,21 @@ class WordpressRestApiClient:
             payload (dict[str, str]): dictionary payload for PUT method
         """
         async with client.put(
-            f"{self.url}/{endpoint}",
-            json=payload,
-            auth=self.auth
+            f"{self.url}/{endpoint}", json=payload, auth=self.auth
         ) as resp:
             response = await resp.json()
             logging.info(response)
             return response
 
     async def delete(
-            self,
-            client: ClientSession,
-            /, *,
-            endpoint: Optional[Union[str, int]]) -> str:
+        self, client: ClientSession, /, *, endpoint: Optional[Union[str, int]]
+    ) -> str:
         """DELETE method.
 
         Args:
             endpoint (int): endpoint for DELETE method
         """
-        async with client.delete(
-            f"{self.url}/{endpoint}",
-            auth=self.auth
-        ) as resp:
+        async with client.delete(f"{self.url}/{endpoint}", auth=self.auth) as resp:
             response = await resp.json()
             logging.info(response)
             return response
